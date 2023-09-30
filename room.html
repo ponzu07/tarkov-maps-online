@@ -37,18 +37,21 @@
                           d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"></path>
                 </svg>
             </button>
+            <button id="delete-shape-button">
+                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                    <path fill="#000000" d="M 16 4 L 22 10 L 15 17 L 9 11 m 0.523 0.506 L 6 15 L 11 20 L 14.511 16.463 M 19 20 L 19 19 L 10 19 L 10 20 Z"></path>
+                </svg>
+            </button>
         </div>
 
         <div class="properties">
             <select id="background-options" class="background-options">
-                <option value="none">Ninguno</option>
+                <option value="none">背景なし</option>
                 <option value="map1">Shoreline</option>
                 <option value="map2">Customs</option>
                 <option value="map3">Woods</option>
-                <option value="map10">Streets</option>
                 <option value="map5">Interchange</option>
                 <option value="map6">Factory</option>
-                <option value="map7">Interchange C.C. #2</option>
                 <option value="map8">reserve</option>
                 <option value="map9">Lighthouse</option>
                 <option value="map10">Streets</option>
@@ -57,7 +60,7 @@
             <div class="range">
                 <div class="number-range">5px</div>
                 <div class="slide-range">
-                    <input type="range" value="5" min="1" max="15" id="drawing-line-width">
+                    <input type="range" value="5" min="1" max="25" id="drawing-line-width">
                 </div>
             </div>
 
@@ -68,7 +71,10 @@
                 <div id="#000000" style="background-color: #000000"></div>
                 <div id="#ffffff" style="background-color: #ffffff"></div>
                 <div id="#0000ff" style="background-color: #0000ff"></div>
-                <div id="#ffb900" style="background-color: #ffb900"></div>
+                <div id="#ffff00" style="background-color: #ffff00"></div>
+                <div id="#9400d3" style="background-color: #9400d3"></div>
+                <div id="#008b8b" style="background-color: #008b8b"></div>
+                <div id="#ff7f50" style="background-color: #ff7f50"></div>
             </div>
         </div>
     </div>
