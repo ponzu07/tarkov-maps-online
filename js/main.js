@@ -243,12 +243,18 @@ $(function() {
 
     let c = new Circle(canvas),
         a = new Arrow(canvas);
+    let isEraserMode = false;
+
 
     canvas.freeDrawingBrush.color = drawingColor.val();
     canvas.freeDrawingBrush.width = parseInt(drawingLineWidth.val(), 10) || 1;
 
     $('#clear-canvas').on('click', function () {
-        clear();
+        var confirmation = confirm('キャンバスをクリアしますか？');
+        if (confirmation) {
+            clear();
+        }
+        
     });
 
     $('#background-options').on('change', function () {
@@ -291,6 +297,19 @@ $(function() {
         canvas.isDrawingMode = false;
         a.active();
         c.desactive();
+    });
+
+    $('#delete-shape-button').on('click', function() {
+        canvas.isDrawingMode = false;
+        var selectedObject = canvas.getActiveObject();
+        if (selectedObject) {
+            canvas.remove(selectedObject);
+        }
+    });
+
+    canvas.on('object:selected', function(e) {
+        var selectedObject = e.target;
+        canvas.remove(selectedObject);
     });
 
     function setBackground(backgroundImage) {
