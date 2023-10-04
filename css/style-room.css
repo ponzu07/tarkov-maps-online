@@ -44,7 +44,7 @@
     cursor: pointer;
 }
 
-.colors div:nth-child(-n+3) {
+.colors div:nth-child(-n+6) {
     margin-bottom: 5px;
 }
 
