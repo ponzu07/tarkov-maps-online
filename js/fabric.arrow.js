@@ -1,42 +1,48 @@
 fabric.Arrow = fabric.util.createClass(fabric.Line, {
 
-    type: 'Arrow',
+  type: 'Arrow',
 
-    initialize: function(element, options) {
-        options || (options = {});
-        this.callSuper('initialize', element, options);
-    },
+  initialize: function(element, options) {
+    options || (options = {});
+    this.callSuper('initialize', element, options);
+  },
 
-    toObject: function() {
-        return fabric.util.object.extend(this.callSuper('toObject'));
-    },
+  toObject: function() {
+    return fabric.util.object.extend(this.callSuper('toObject'));
+  },
 
-    _render: function(ctx) {
-        this.callSuper('_render', ctx);
+  _render: function(ctx){
+    this.callSuper('_render', ctx);
 
-        if (this.width === 0 || this.height === 0 || !this.visible) return;
+    // do not render if width/height are zeros or object is not visible
+    if (this.width === 0 && this.height === 0 || !this.visible) return;
 
-        ctx.save();
+    ctx.save();
 
-        let xDiff = this.x2 - this.x1;
-        let yDiff = this.y2 - this.y1;
-        let angle = Math.atan2(yDiff, xDiff);
-        ctx.translate((this.x2 - this.x1) / 2, (this.y2 - this.y1) / 2);
-        ctx.rotate(angle);
-        ctx.beginPath();
-        ctx.moveTo(20, 0);
-        ctx.lineTo(-2, 10);
-        ctx.lineTo(-2, -10);
-        ctx.closePath();
-        ctx.fillStyle = this.stroke;
-        ctx.fill();
+    var xDiff = this.x2 - this.x1;
+    var yDiff = this.y2 - this.y1;
+    var angle = Math.atan2(yDiff, xDiff);
+    ctx.translate((this.x2 - this.x1) / 2, (this.y2 - this.y1) / 2);
+    ctx.rotate(angle);
+    ctx.beginPath();
+    //move 10px in front of line to start the arrow so it does not have the square line end showing in front (0,0)
+    ctx.moveTo(10,0);
+    ctx.lineTo(-10, 10);
+    ctx.lineTo(-10, -10);
+    ctx.closePath();
+    ctx.fillStyle = this.stroke;
+    ctx.fill();
 
-        ctx.restore();
-    }
+    ctx.restore();
+  },
+
+  clipTo: function(ctx) {
+    this._render(ctx);
+  }
 });
 
-fabric.Arrow.fromObject = function(object, callback) {
-    callback && callback(new fabric.Arrow([object.x1, object.y1, object.x2, object.y2], object));
+fabric.Arrow.fromObject = function (object, callback) {
+    callback && callback(new fabric.Arrow([object.x1, object.y1, object.x2, object.y2],object));
 };
 
 fabric.Arrow.async = true;
