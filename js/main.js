@@ -299,18 +299,22 @@ $(function () {
       c.desactive(); // Circle描画モードを無効にします。
     });
     // オブジェクト削除ボタンがクリックされたときの処理を設定します。
+    // オブジェクト削除ボタンがクリックされたときの処理を設定します。
     $('#delete-shape-button').on('click', function () {
       canvas.isDrawingMode = false; // 描画モードを無効にします。
       c.desactive(); // Circle描画モードを無効にします。
-      a.desactive(); // Arrow描画モードを無効にします。
+      a.desactive(); // Arrow描画モードを無効にします.
       var selectedObject = canvas.getActiveObject();
-      if (selectedObject) {
-        canvas.remove(selectedObject); // 選択されたオブジェクトを削除します。
+      if (selectedObject && !selectedObject.isBackground) {
+        // 選択されたオブジェクトを削除しますが、背景オブジェクトでない場合にのみ削除します。
+        canvas.remove(selectedObject);
       }
+      // キャンバスのコンテンツをFirebaseデータベースに更新します。
       currentRoom.update({
-        map: this.value
+        content: JSON.stringify(canvas)
       });
     });
+
     // キャンバス上のオブジェクトが選択されたときの処理を設定します。
     canvas.on('object:selected', function (e) {
       var selectedObject = e.target;
@@ -319,7 +323,8 @@ $(function () {
     // 背景を設定する関数です。
     function setBackground(backgroundImage) {
       if (backgroundImage === "none") {
-        canvas.backgroundImage = 0;
+        // 背景画像をクリアする
+        canvas.setBackgroundImage(null);
         canvas.setBackgroundColor({
           source: 'img/grid.png',
           repeat: 'repeat'
@@ -335,6 +340,7 @@ $(function () {
         });
       }
     }
+
     // キャンバスをクリアする関数です。
     function clear() {
       canvas.clear(); // キャンバスをクリアします。
